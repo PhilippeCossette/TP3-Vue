@@ -4,7 +4,7 @@ const Forfait = db.forfaits;
 // Créer un forfait
 exports.create = (req, res) => {
   if (!req.body.name) {
-    res.status(400).send({ message: "The name is required!" });
+    res.status(400).send({ message: "Le nom est obligatoire!" });
     return;
   }
 
@@ -37,8 +37,8 @@ exports.update = (req, res) => {
   const id = req.params.id;
   Forfait.update(req.body, { where: { id: id } })
     .then((num) => {
-      if (num == 1) res.send({ message: "Updated successfully." });
-      else res.send({ message: "No changes made." });
+      if (num == 1) res.send({ message: "Forfait mis à jour." });
+      else res.send({ message: "Forfait non trouvé ou vide." });
     })
     .catch((err) => res.status(500).send({ message: err.message }));
 };
@@ -48,8 +48,8 @@ exports.delete = (req, res) => {
   const id = req.params.id;
   Forfait.destroy({ where: { id: id } })
     .then((num) => {
-      if (num == 1) res.send({ message: "Deleted successfully." });
-      else res.send({ message: "Plan not found." });
+      if (num == 1) res.send({ message: "Forfait supprimé." });
+      else res.send({ message: "Forfait non trouvé." });
     })
     .catch((err) => res.status(500).send({ message: err.message }));
 };
