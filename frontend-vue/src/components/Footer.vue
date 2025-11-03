@@ -14,24 +14,27 @@
           <h5 class="fw-bold">Liens rapides</h5>
           <ul class="list-unstyled">
             <li>
-              <RouterLink to="/" class="text-dark text-decoration-none">
+              <router-link to="/" class="text-dark text-decoration-none">
                 Accueil
-              </RouterLink>
+              </router-link>
             </li>
             <li>
-              <RouterLink to="/forfaits" class="text-dark text-decoration-none">
+              <router-link
+                to="/forfaits"
+                class="text-dark text-decoration-none"
+              >
                 Forfaits
-              </RouterLink>
+              </router-link>
             </li>
             <li>
-              <RouterLink to="/about" class="text-dark text-decoration-none">
+              <router-link to="/about" class="text-dark text-decoration-none">
                 À propos
-              </RouterLink>
+              </router-link>
             </li>
             <li>
-              <RouterLink to="/contact" class="text-dark text-decoration-none">
+              <router-link to="/contact" class="text-dark text-decoration-none">
                 Contact
-              </RouterLink>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -74,11 +77,8 @@
 </template>
 
 <script>
-import { RouterLink } from "vue-router";
-
 export default {
   name: "Footer",
-  components: { RouterLink },
   data() {
     return {
       year: new Date().getFullYear(),
