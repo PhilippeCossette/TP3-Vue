@@ -55,13 +55,13 @@ import ForfaitDataService from "../services/ForfaitDataService";
 export default {
   name: "TripDetails",
   components: { AddTrip },
-  props: ["trips"],
+  props: ["trips", "updateTrip"], //coming from App.vue
 
   data() {
     return {
-      trip: null, // currently viewed trip, Null if not loaded
-      showEdit: false, // show/hide edit form
-      loadingMessage: "Chargement du forfait...", // message while loading or not found
+      trip: null,
+      showEdit: false,
+      loadingMessage: "Chargement du forfait...",
     };
   },
 
@@ -70,47 +70,43 @@ export default {
   },
 
   methods: {
+    //Loads one trip by id
     async loadTrip(rawId) {
       const id = Number(rawId);
-      this.trip = null; // reset trip while loading
+      this.trip = null;
       this.loadingMessage = "Chargement du forfait...";
 
-      // Try to find trip in props first, Prevent unnecessary API calls
-      if (Array.isArray(this.trips) && this.trips.length > 0) {
-        const found = this.trips.find((t) => t.id === id);
-        if (found) {
-          this.trip = found;
-          return;
-        }
+      // First, check if we already have it in props
+      const found = this.trips.find((t) => t.id === id);
+      if (found) {
+        this.trip = found;
+        return;
       }
 
-      // Fallback to API call
+      // Otherwise, get it from API (fallback)
       try {
         const res = await ForfaitDataService.get(id);
-        if (res.data && Object.keys(res.data).length > 0) {
-          this.trip = res.data;
-        } else {
-          this.loadingMessage = "Aucun forfait trouvé.";
-        }
+        this.trip = res.data;
       } catch (error) {
         console.error("Erreur lors du chargement du forfait:", error);
-        this.trip = null;
         this.loadingMessage = "Aucun forfait trouvé.";
       }
     },
 
-    // Toggle edit form visibility
     toggleEdit() {
       this.showEdit = !this.showEdit;
     },
 
-    // Save updated trip details
+  
     async saveTrip(updatedTrip) {
       try {
-        await ForfaitDataService.update(updatedTrip.id, updatedTrip);
-        // Update local trip data
-        const res = await ForfaitDataService.get(updatedTrip.id);
-        this.trip = res.data;
+        // Update the backend AND the global trips array in App.vue
+        await this.updateTrip(updatedTrip);
+
+        // Reflect the change locally
+        this.trip = { ...this.trip, ...updatedTrip };
+
+        // Close the slide-in
         this.showEdit = false;
       } catch (e) {
         console.error("Erreur lors de la mise à jour du forfait:", e);

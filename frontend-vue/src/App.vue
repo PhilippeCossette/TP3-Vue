@@ -11,6 +11,7 @@
         :addTrip="addTrip"
         :updateTrip="updateTrip"
         :deleteTrip="deleteTrip"
+        :updateInv="updateInv"
       />
     </main>
 
@@ -66,6 +67,8 @@ export default {
       await ForfaitDataService.delete(id);
       await this.loadTrips();
     },
+
+
   },
 };
 </script>
