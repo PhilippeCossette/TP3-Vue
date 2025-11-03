@@ -6,10 +6,10 @@
     >
       <h2 class="mb-0">
         <!-- If form.id is present, we are editing else we are adding -->
-        {{ form.id ? "Modifier le forfait" : "Ajouter un forfait" }} 
+        {{ form.id ? "Modifier le forfait" : "Ajouter un forfait" }}
       </h2>
       <i
-        class="bi bi-x fs-3" 
+        class="bi bi-x fs-3"
         style="cursor: pointer"
         @click="$emit('close')"
       ></i>
@@ -95,12 +95,13 @@
 <script>
 export default {
   props: ["trip"], // trip to edit (null for new trip)
+  // https://www.w3schools.com/vue/vue_emit.php
   emits: ["save", "close"],
   data() {
     return {
       message: null, // error message
       // Default form values
-      form: { 
+      form: {
         id: null,
         name: "",
         category: "",
@@ -119,12 +120,19 @@ export default {
   },
   methods: {
     saveForm() {
-      if (!this.form.name || !this.form.image || !this.form.price || !this.form.length || !this.form.category || !this.form.description) {
+      if (
+        !this.form.name ||
+        !this.form.image ||
+        !this.form.price ||
+        !this.form.length ||
+        !this.form.category ||
+        !this.form.description
+      ) {
         this.message = "Veuillez remplir tous les champs requis.";
         return;
       }
 
-      this.$emit("save", { ...this.form }); 
+      this.$emit("save", { ...this.form });
     },
   },
 };

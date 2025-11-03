@@ -5,13 +5,11 @@
 
     <!-- Main Page Content -->
     <main>
-      <!-- All views (Home, About, Forfaits, TripDetails) render here -->
       <router-view
         :trips="trips"
         :addTrip="addTrip"
         :updateTrip="updateTrip"
         :deleteTrip="deleteTrip"
-        :updateInv="updateInv"
       />
     </main>
 
