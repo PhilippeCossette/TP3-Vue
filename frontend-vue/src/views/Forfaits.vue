@@ -1,12 +1,7 @@
 <template>
   <main class="py-5">
-    <!-- Add / Edit Trip Modal -->
-    <AddTrip
-      v-if="showAddMenu"
-      :trip="selectedTrip"
-      @close="toggleAddMenu"
-      @save="handleSaveTrip"
-    />
+    <!-- Add Trip Modal -->
+    <AddTrip v-if="showAddMenu" @close="toggleAddMenu" @save="handleSaveTrip" />
 
     <section class="max-1200 mx-auto px-4 py-5">
       <header class="d-flex justify-content-between align-items-center my-3">
@@ -38,28 +33,22 @@ export default {
   components: { AddTrip, SingleTrip },
 
   // Props from App.vue
-  props: ["trips", "addTrip", "updateTrip", "deleteTrip"],
+  props: ["trips", "addTrip", "deleteTrip"],
 
   data() {
     return {
       showAddMenu: false, // show/hide add trip form
-      selectedTrip: null, // trip to edit
     };
   },
 
   methods: {
     toggleAddMenu() {
       this.showAddMenu = !this.showAddMenu;
-      if (!this.showAddMenu) this.selectedTrip = null;
     },
 
-    // Save new or updated trip
+    // Add new trip only
     async handleSaveTrip(trip) {
-      if (trip.id) {
-        await this.updateTrip(trip);
-      } else {
-        await this.addTrip(trip);
-      }
+      await this.addTrip(trip);
       this.toggleAddMenu();
     },
 

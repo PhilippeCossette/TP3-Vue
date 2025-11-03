@@ -97,7 +97,6 @@ export default {
       this.showEdit = !this.showEdit;
     },
 
-  
     async saveTrip(updatedTrip) {
       try {
         // Update the backend AND the global trips array in App.vue
